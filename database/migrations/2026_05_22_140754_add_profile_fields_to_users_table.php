@@ -31,7 +31,7 @@ return new class extends Migration
                 'birthday',
                 'bio',
                 'profile_picture',
-                'is_admin'
+                'is_admin',
             ]);
         });
     }
