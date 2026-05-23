@@ -18,14 +18,42 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+
             'email' => [
                 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                'unique:users,email,' . $this->user()->id,
+            ],
+
+            // Username validation
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:users,username,' . $this->user()->id,
+            ],
+
+            // Birthday validation
+            'birthday' => [
+                'nullable',
+                'date',
+            ],
+
+            // Bio validation
+            'bio' => [
+                'nullable',
+                'string',
+                'max:1000',
+            ],
+            // Profile_picture
+            'profile_picture'=>[
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png',
+                'max:2048',
             ],
         ];
-    }
-}
+    }}
