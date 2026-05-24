@@ -12,9 +12,37 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('news.index')">
+                        News
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('faq.index')">
+                        FAQ
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('contact.create')">
+                        Contact
+                    </x-nav-link>
+                    @auth
+
+                        @if(auth()->user()->is_admin)
+
+                            <x-nav-link :href="route('news.create')">
+                                Create News
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('faq.create')">
+                                Create FAQ
+                            </x-nav-link>
+
+                        @endif
+
+                    @endauth
                 </div>
             </div>
 
