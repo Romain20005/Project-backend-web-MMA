@@ -54,6 +54,7 @@ class NewsController extends Controller
             // image validation
             'image' => ['nullable', 'image', 'max:2048'],
         ]);
+
         // default null
         $imagePath = null;
 
@@ -73,7 +74,41 @@ class NewsController extends Controller
             'image' => $imagePath,
             'user_id' => Auth::id(),
         ]);
+
         // Redirect naar news pagina
         return redirect()->route('news.index');
+    }
+
+    /**
+     * Show edit form
+     */
+    public function edit(News $news): View
+    {
+        return view('news.edit', [
+            'news' => $news,
+        ]);
+    }
+
+    /**
+     * Update news article
+     */
+    public function update(Request $request, News $news): RedirectResponse
+    {
+        // Validate form data
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required'],
+            'published_at' => ['required', 'date'],
+        ]);
+
+        // Update article
+        $news->update([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'published_at' => $validated['published_at'],
+        ]);
+
+        // Redirect back
+        return redirect()->route('news.show', $news);
     }
 }

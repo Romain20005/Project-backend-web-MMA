@@ -11,15 +11,15 @@ class AdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): (Response)  $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // check if logged in user is admin
-        if (!auth()->user() || !auth()->user()->is_admin) {
+        if (!auth()->check() || !auth()->user()->is_admin) {
 
             abort(403);
         }
 
         return $next($request);
-    }}
+    }
+}
