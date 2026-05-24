@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
@@ -38,9 +39,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/users/{user}', [ProfileController::class, 'show'])
     ->name('profile.show');
 
-// Public News Routes
-
-
 // everyone can see news
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
@@ -67,6 +65,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // single news article
 Route::get('/news/{news}', [NewsController::class, 'show'])
     ->name('news.show');
+
+//Faq routes
+Route::get('/faq', [FAQController::class, 'index'])
+    ->name('faq.index');
 
 //Auth Routes
 
