@@ -4,62 +4,65 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all news posts
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $news = News::latest()->get();
+
+        return view('news.index', [
+            'news' => $news,
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show one news post
      */
-    public function create()
+    public function show(News $news): View
     {
-        //
+        return view('news.show', [
+            'news' => $news,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show create form
      */
-    public function store(Request $request)
+    public function create(): View
     {
-        //
+        return view('news.create');
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created news article
      */
-    public function show(News $news)
+    public function store(Request $request): RedirectResponse
     {
-        //
-    }
+        // Validate form data
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required'],
+            'published_at' => ['required', 'date'],
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(News $news)
-    {
-        //
-    }
+        // Create the news article
+        News::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'published_at' => $validated['published_at'],
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, News $news)
-    {
-        //
-    }
+            // gekoppeld aan ingelogde user
+            'user_id' => Auth::id(),
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(News $news)
-    {
-        //
+        // Redirect naar news pagina
+        return redirect()->route('news.index');
     }
 }

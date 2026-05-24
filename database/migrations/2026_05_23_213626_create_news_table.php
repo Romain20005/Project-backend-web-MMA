@@ -13,12 +13,21 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+
             $table->string('title');
+
+            // artikel inhoud
+            $table->text('content');
+
+            // optionele afbeelding
             $table->string('image')->nullable();
+
+            // publicatiedatum
             $table->date('published_at');
 
-            // relatie met users table
+            // relatie met user
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }
