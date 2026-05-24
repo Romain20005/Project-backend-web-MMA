@@ -40,4 +40,16 @@ class FAQAdminController extends Controller
         // redirect back to faq page
         return redirect()->route('faq.index');
     }
+
+    /**
+     * Delete FAQ
+     */
+    public function destroy(FAQ $faq): RedirectResponse
+    {
+        // delete faq
+        $faq->delete();
+
+        // redirect back
+        return redirect()->route('faq.index');
+    }
 }
