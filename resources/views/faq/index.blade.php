@@ -26,6 +26,38 @@
                             {{ $faq->answer }}
                         </p>
 
+                        @auth
+
+                            @if(auth()->user()->is_admin)
+
+                                <a
+                                    href="{{ route('faq.edit', $faq) }}"
+                                    class="bg-yellow-500 text-white px-4 py-2 rounded inline-block mb-2"
+                                >
+                                    Edit FAQ
+                                </a>
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('faq.destroy', $faq) }}"
+                                    class="mt-4"
+                                >
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="bg-red-600 text-white px-4 py-2 rounded"
+                                    >
+                                        Delete FAQ
+                                    </button>
+
+                                </form>
+
+                            @endif
+
+                        @endauth
                     </div>
 
                 @empty

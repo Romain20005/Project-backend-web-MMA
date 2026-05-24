@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class FAQAdminController extends Controller
 {
-    /**
-     * Show create FAQ form
-     */
     public function create(): View
     {
         return view('faq.create', [
@@ -22,9 +19,6 @@ class FAQAdminController extends Controller
         ]);
     }
 
-    /**
-     * Store FAQ
-     */
     public function store(Request $request): RedirectResponse
     {
         // validate form
@@ -42,8 +36,42 @@ class FAQAdminController extends Controller
     }
 
     /**
-     * Delete FAQ
+     * Show edit form
      */
+    public function edit(FAQ $faq): View
+    {
+        $categories = FAQCategory::all();
+
+        return view('faq.edit', [
+            'faq' => $faq,
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * Update FAQ
+     */
+    public function update(
+        Request $request,
+        FAQ $faq
+    ): RedirectResponse {
+
+        // validate
+        $validated = $request->validate([
+            'question' => ['required', 'string'],
+            'answer' => ['required', 'string'],
+            'f_a_q_category_id' => [
+                'required',
+                'exists:f_a_q_categories,id'
+            ],
+        ]);
+
+        // update FAQ
+        $faq->update($validated);
+
+        // redirect back
+        return redirect()->route('faq.index');
+    }
     public function destroy(FAQ $faq): RedirectResponse
     {
         // delete faq

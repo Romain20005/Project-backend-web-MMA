@@ -75,6 +75,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/faq', [FAQAdminController::class, 'store'])
         ->name('faq.store');
 
+    Route::delete('/admin/faq/{faq}', [FAQAdminController::class, 'destroy'])
+        ->name('faq.destroy');
+
+    Route::get('/admin/faq/{faq}/edit', [FAQAdminController::class, 'edit'])
+        ->name('faq.edit');
+
+    Route::patch('/admin/faq/{faq}', [FAQAdminController::class, 'update'])
+        ->name('faq.update');
+
 });
 
 //Auth Routes
