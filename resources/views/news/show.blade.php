@@ -23,6 +23,42 @@
             </p>
 
         </div>
+        @auth
+
+            @if(auth()->user()->is_admin)
+
+                <div class="mt-6">
+
+                    <a
+                        href="{{ route('news.edit', $news) }}"
+                        class="bg-yellow-500 text-white px-4 py-2 rounded"
+                    >
+                        Edit Article
+                    </a>
+
+                    <form
+                        method="POST"
+                        action="{{ route('news.destroy', $news) }}"
+                        class="mt-4"
+                    >
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            class="bg-red-600 text-white px-4 py-2 rounded"
+                        >
+                            Delete Article
+                        </button>
+
+                    </form>
+
+                </div>
+
+            @endif
+
+        @endauth
 
     </div>
 

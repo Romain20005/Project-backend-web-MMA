@@ -108,7 +108,20 @@ class NewsController extends Controller
             'published_at' => $validated['published_at'],
         ]);
 
+
         // Redirect back
         return redirect()->route('news.show', $news);
+    }
+
+    /**
+     * Delete news article
+     */
+    public function destroy(News $news): RedirectResponse
+    {
+        // delete article
+        $news->delete();
+
+        // redirect back
+        return redirect()->route('news.index');
     }
 }
