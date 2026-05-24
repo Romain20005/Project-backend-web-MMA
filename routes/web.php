@@ -1,15 +1,11 @@
 <?php
 
+use App\Http\Controllers\FAQCategoryController;
+use App\Http\Controllers\FAQAdminController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Home
-|--------------------------------------------------------------------------
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -69,6 +65,17 @@ Route::get('/news/{news}', [NewsController::class, 'show'])
 //Faq routes
 Route::get('/faq', [FAQController::class, 'index'])
     ->name('faq.index');
+
+// Admin FAQ Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/admin/faq/create', [FAQAdminController::class, 'create'])
+        ->name('faq.create');
+
+    Route::post('/admin/faq', [FAQAdminController::class, 'store'])
+        ->name('faq.store');
+
+});
 
 //Auth Routes
 

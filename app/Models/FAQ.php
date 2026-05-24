@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FAQ extends Model
 {
+    protected $table = 'faqs';
     protected $fillable = [
         'question',
         'answer',
