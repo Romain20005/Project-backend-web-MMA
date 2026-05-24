@@ -5,6 +5,7 @@ use App\Http\Controllers\FAQAdminController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -62,6 +63,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/news/{news}', [NewsController::class, 'show'])
     ->name('news.show');
 
+// Contact page
+Route::get('/contact', [ContactController::class, 'create'])
+    ->name('contact.create');
+
+Route::post('/contact', [ContactController::class, 'store'])
+    ->name('contact.store');
+
 //Faq routes
 Route::get('/faq', [FAQController::class, 'index'])
     ->name('faq.index');
@@ -83,6 +91,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::patch('/admin/faq/{faq}', [FAQAdminController::class, 'update'])
         ->name('faq.update');
+
+
 
 });
 
