@@ -50,18 +50,29 @@ class NewsController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required'],
             'published_at' => ['required', 'date'],
+
+            // image validation
+            'image' => ['nullable', 'image', 'max:2048'],
         ]);
+        // default null
+        $imagePath = null;
+
+        // if image uploaded
+        if ($request->hasFile('image')) {
+
+            // store image in storage/app/public/news_images
+            $imagePath = $request->file('image')
+                ->store('news_images', 'public');
+        }
 
         // Create the news article
         News::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
             'published_at' => $validated['published_at'],
-
-            // gekoppeld aan ingelogde user
+            'image' => $imagePath,
             'user_id' => Auth::id(),
         ]);
-
         // Redirect naar news pagina
         return redirect()->route('news.index');
     }

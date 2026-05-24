@@ -10,8 +10,20 @@
 
             <div class="bg-gray-800 text-white p-6 rounded-lg mb-4">
 
+                @if ($article->image)
+
+                    <img
+                        src="{{ asset('storage/' . $article->image) }}"
+                        alt="News Image"
+                        class="w-full h-64 object-cover rounded mb-4"
+                    >
+
+                @endif
+
                 <h2 class="text-2xl font-bold">
-                    {{ $article->title }}
+                    <a href="{{ route('news.show', $article) }}">
+                        {{ $article->title }}
+                    </a>
                 </h2>
 
                 <p class="mt-2">

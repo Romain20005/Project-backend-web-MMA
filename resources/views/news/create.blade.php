@@ -6,7 +6,9 @@
             Create News Article
         </h1>
 
-        <form method="POST" action="{{ route('news.store') }}">
+        <form method="POST"
+              action="{{ route('news.store') }}"
+              enctype="multipart/form-data">
 
             @csrf
 
@@ -67,6 +69,21 @@
                     {{ $message }}
                 </p>
                 @enderror
+            </div>
+
+            <div class="mt-4">
+
+                <label for="image" class="text-white block mb-2">
+                    News Image
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    class="text-white"
+                >
+
             </div>
 
             <button
